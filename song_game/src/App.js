@@ -1,117 +1,62 @@
-  import React, { useState } from 'react';
-  import { ButtonGroup, Button, Grid, Box, TextField } from '@mui/material';
-  import { Link, Outlet  } from "react-router-dom";
+import { ButtonGroup, Button, Grid, Box, TextField } from '@mui/material';
+import { Link,} from "react-router-dom";
 
+function Boxz(props) {
+  return (
+  <Box
+    width={500} 
+    my={2} 
+    display="flex"
+    flexDirection="column"
+    alignItems="flex-start" 
+    p={2} 
+    sx={{ 
+      border: '1px solid grey', 
+      borderRadius: '20px',  
+      textAlign: 'center',
+      minHeight: '500px',
+    }} 
+  >
+  </Box>
+  );
+}
 
-  function Boxz(props) {
+function UsersBtn(props) {
+  return (
+    <ButtonGroup variant="contained" disableElevation aria-label="Basic button group" >
+      <Link to="/singer/singer1" style={{ textDecoration: 'none' }}>
+        <Button style={{ backgroundColor: "green", color: 'white', width: '150px' }}>Singer 1</Button>
+      </Link>
+      <Link to="/singer/singer2" style={{ textDecoration: 'none' }}>
+        <Button style={{ backgroundColor: "blue", color: 'white', width: '150px' }}>Singer 2</Button>
+      </Link>
+      <Link to="/singer/singer3" style={{ textDecoration: 'none' }}>
+        <Button style={{ backgroundColor: "black", color: 'white', width: '150px' }}>Singer 3</Button>
+      </Link>
+      <Link to="/singer/singer4" style={{ textDecoration: 'none' }}>
+        <Button style={{ backgroundColor: "red", color: 'white', width: '150px' }}>Singer 4</Button>
+      </Link>
+    </ButtonGroup>
+  );
+}
 
-    const getBackgroundColor = (id) => {
-      switch (id) {
-        case 1:
-          return 'green';
-        case 2:
-          return 'blue';
-        case 3:
-          return 'black';
-        default:
-          return 'transparent'; 
-      }
-    };      
-
-    return (
-      <Box
-        width={300} 
-        my={2} 
-        display="flex"
-        flexDirection="column"
-        alignItems="flex-start" 
-        p={2} 
-        sx={{ 
-          border: '1px solid grey', 
-          textAlign: 'center',
-          minHeight: '500px' 
-        }} 
-      >
-        {props.staticArr.map((item, index) => (
-          <Box
-            key={index}
-            sx={{
-              border: '1px solid grey',
-              padding: '8px',
-              backgroundColor: getBackgroundColor(item.id), // Set background color based on id
-              color: 'white', // Set text color for better readability
-              marginBottom: '8px', // Add space between boxes
-            }}
-          >
-            {item.text}
-          </Box>
-        ))}
-        {props.data && (
-          <Box sx={{ 
-            border: '1px solid grey', 
-            padding: '8px',
-            backgroundColor: "green",
-            color: 'white',
-            marginBottom: '8px',
-          }}>
-            {props.data}
-          </Box>    
-        )}
-      </Box>
-    );
-  }
-
-  function UsersBtn() {
-    return (
-      <ButtonGroup variant="contained" disableElevation aria-label="Basic button group" style={{ gap: '50px' }}>
-        <Link to="/singers/singer1" style={{ textDecoration: 'none' }}>
-          <Button style={{ backgroundColor: "green", color: 'white' }}>Singer 1</Button>
-        </Link>
-        <Link to="/singers/singer2" style={{ textDecoration: 'none' }}>
-          <Button style={{ backgroundColor: "blue", color: 'white' }}>Singer 2</Button>
-        </Link>
-        <Link to="/singers/singer3" style={{ textDecoration: 'none' }}>
-          <Button style={{ backgroundColor: "black", color: 'white' }}>Singer 3</Button>
-        </Link>
-        <Link to="/singers/singer4" style={{ textDecoration: 'none' }}>
-          <Button style={{ backgroundColor: "red", color: 'white' }}>Singer 4</Button>
-        </Link>
-      </ButtonGroup>
-    );
-  }
-
-
-  function App() {
-    const [text, setText] = useState('');
-    const [items, setItems] = useState([]);
-
-    const handleChange = (event) => {
-      setText(event.target.value);
-    };
-
-    const handleKeyDown = (event) => {
-      if(event.keyCode === 13) {
-        const newItem = {
-          id: 1, // Assuming id to be sequential
-          text: event.target.value
-        };
-        setItems([...items, newItem]);
-      }
-    }
-
-    return (
-      <Grid container direction="column" justifyContent="center" alignItems="center" style={{ marginTop: '50px' }}>
-        <Grid item>
-          <UsersBtn />
-        </Grid>  
-        <Grid>
-          <TextField style={{marginTop:'10px', }} onChange={handleChange} onKeyDown={handleKeyDown}/>
-        </Grid>
-        <Grid item>
-          <Boxz data={text} staticArr={items} />
-        </Grid>
+function App() {
+  return (
+    <Grid container direction="column" justifyContent="center" alignItems="center" style={{ marginTop: '15px' }}>
+      <Grid item>
+        <h1>Complete the Lyrics</h1>
+      </Grid>  
+      <Grid item>
+        <UsersBtn />
+      </Grid>  
+      <Grid item> 
+        <TextField disabled style={{marginTop:'10px', width: '570px', border: '4px solid black', borderRadius: '20px' }} />
       </Grid>
-    );
-  }
+      <Grid item>
+        <Boxz />
+      </Grid>
+    </Grid>
+  );
+}
 
-  export default App;
+export default App;

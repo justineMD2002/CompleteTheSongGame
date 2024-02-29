@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ButtonGroup, Button, Grid, Box, TextField } from '@mui/material';
-import { Link, Outlet  } from "react-router-dom";
-
+import { Link, useLocation  } from "react-router-dom";
 
 function Boxz(props) {
 
@@ -14,78 +13,101 @@ function Boxz(props) {
       case 3:
         return 'black';
       case 4:
-        return'red';  
+        return 'red';
       default:
         return 'transparent'; 
     }
   };      
 
   return (
-    <Box
-      width={300} 
-      my={2} 
-      display="flex"
-      flexDirection="column"
-      alignItems="flex-start" 
-      p={2} 
-      sx={{ 
-        border: '1px solid grey', 
-        textAlign: 'center',
-        minHeight: '500px' 
-      }} 
-    >
-      {props.staticArr.map((item, index) => (
-        <Box
-          key={index}
-          sx={{
-            border: '1px solid grey',
-            padding: '8px',
-            backgroundColor: getBackgroundColor(item.id), // Set background color based on id
-            color: 'white', // Set text color for better readability
-            marginBottom: '8px', // Add space between boxes
-          }}
-        >
-          {item.text}
-        </Box>
-      ))}
-      {props.data && (
-        <Box sx={{ 
-          border: '1px solid grey', 
-          padding: '8px',
-          color: 'white', // Set text color for better readability
-          backgroundColor: "red",
+  <Box
+    width={500} 
+    my={2} 
+    display="flex"
+    flexDirection="column"
+    alignItems="flex-start" 
+    p={2} 
+    sx={{ 
+      border: '1px solid grey', 
+      borderRadius: '20px',  
+      textAlign: 'center',
+      minHeight: '500px',
+    }} 
+  >
+    {props.staticArr.map((item, index) => (
+      <Box
+        key={index}
+        sx={{
+          border: '1px solid grey',
+          padding: '10px',
+          borderRadius: '20px',  
+          backgroundColor: getBackgroundColor(item.id), 
+          color: 'white',
+          textAlign: 'left',
           marginBottom: '8px',
-        }}>
-          {props.data}
-        </Box>    
-      )}
-    </Box>
+          wordWrap: 'break-word', 
+          overflow: 'hidden', 
+          minWidth: '98%',
+          textOverflow: 'ellipsis',
+          maxWidth: '97%', 
+        }}
+      >
+        {item.text}
+      </Box>
+    ))}
+    {props.data && (
+      <Box sx={{  
+        border: '1px solid grey', 
+        padding: '8px',
+        backgroundColor: "red",
+        color: 'white',
+        marginBottom: '8px',
+        textAlign: 'left',
+        borderRadius: '20px',  
+        minHeight: '25px',
+        minWidth: '98%',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis', 
+        maxWidth: '98%',
+      }}>
+        {props.data}
+      </Box>  
+    )}    
+  </Box>
+
   );
 }
 
-function UsersBtn() {
+function UsersBtn(props) {
   return (
-    <ButtonGroup variant="contained" disableElevation aria-label="Basic button group" style={{ gap: '50px' }}>
-      <Link to="/singers/singer1" style={{ textDecoration: 'none' }}>
-        <Button style={{ backgroundColor: "green", color: 'white' }}>Singer 1</Button>
+    <ButtonGroup variant="contained" disableElevation aria-label="Basic button group" >
+      <Link to="/singer/singer1" state={props.stet} style={{ textDecoration: 'none' }}>
+        <Button style={{ backgroundColor: "green", color: 'white', width: '150px' }}>Singer 1</Button>
       </Link>
-      <Link to="/singers/singer2" style={{ textDecoration: 'none' }}>
-        <Button style={{ backgroundColor: "blue", color: 'white' }}>Singer 2</Button>
+      <Link to="/singer/singer2" state={props.stet} style={{ textDecoration: 'none' }}>
+        <Button style={{ backgroundColor: "blue", color: 'white', width: '150px' }}>Singer 2</Button>
       </Link>
-      <Link to="/singers/singer3" style={{ textDecoration: 'none' }}>
-        <Button style={{ backgroundColor: "black", color: 'white' }}>Singer 3</Button>
+      <Link to="/singer/singer3" state={props.stet} style={{ textDecoration: 'none' }}>
+        <Button style={{ backgroundColor: "black", color: 'white', width: '150px' }}>Singer 3</Button>
       </Link>
-      <Link to="/singers/singer4" style={{ textDecoration: 'none' }}>
-        <Button style={{ backgroundColor: "red", color: 'white' }}>Singer 4</Button>
+      <Link to="/singer/singer4" state={props.stet} style={{ textDecoration: 'none' }}>
+        <Button style={{ backgroundColor: "red", color: 'white', width: '150px' }}>Singer 4</Button>
       </Link>
     </ButtonGroup>
   );
 }
 
-
 function Singer4() {
   const [text, setText] = useState('');
   const [items, setItems] = useState([]);
+  const location = useLocation();
+  const state = location.state;
+
+  useEffect(() => {
+    if(state) {
+      setItems(state);
+    }
+  }, [state]);
 
   const handleChange = (event) => {
     setText(event.target.value);
@@ -98,17 +120,22 @@ function Singer4() {
         text: event.target.value
       };
       setItems([...items, newItem]);
+      setText('')
+      event.target.value = '';
     }
   }
 
   return (
-    <Grid container direction="column" justifyContent="center" alignItems="center" style={{ marginTop: '50px' }}>
+    <Grid container direction="column" justifyContent="center" alignItems="center" style={{ marginTop: '15px' }}>
       <Grid item>
-        <UsersBtn />
-      </Grid>  
-      <Grid>
-        <TextField style={{marginTop:'10px', }} onChange={handleChange} onKeyDown={handleKeyDown}/>
-      </Grid>
+        <h1>Complete the Lyrics</h1>
+      </Grid> 
+      <Grid item>
+        <UsersBtn stet={items}/>
+      </Grid> 
+      <Grid item>
+        <TextField style={{marginTop:'10px', width: '570px', border: '4px solid black', borderRadius: '20px' }} onChange={handleChange} onKeyDown={handleKeyDown}/>
+      </Grid>   
       <Grid item>
         <Boxz data={text} staticArr={items} />
       </Grid>

@@ -15,23 +15,23 @@ import {
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/singer",
     element: <App />,
   },
   {
-    path: "/singers/singer1",
+    path: "/singer/singer1",
     element: <Singer1 />,
   },
   {
-    path: "/singers/singer2",
+    path: "/singer/singer2",
     element: <Singer2 />,
   },
   {
-    path: "/singers/singer3",
+    path: "/singer/singer3",
     element: <Singer3 />,
   },
   {
-    path: "/singers/singer4",
+    path: "/singer/singer4",
     element: <Singer4 />,
   },
 ]);
@@ -42,13 +42,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
-
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
